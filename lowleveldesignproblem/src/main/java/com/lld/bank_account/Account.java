@@ -3,10 +3,12 @@ package main.java.com.lld.bank_account;
 public class Account {
     private String accountNumber;
     private double balance;
+    private AccountType accountType;
 
-    public Account(String accountNumber, double initialBalance) {
+    public Account(String accountNumber, AccountType accountType, double initialBalance) {
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
+        this.accountType = accountType;
     }
 
     public String getAccountNumber() {
@@ -17,17 +19,18 @@ public class Account {
         return balance;
     }
 
+    public  AccountType getAccountType() {return accountType;}
+
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
         }
     }
 
-    public boolean withdraw(double amount) {
+    public void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
-            return true;
         }
-        return false;
+        else throw  new IllegalArgumentException("Insufficient funds or invalid amount");
     }
 }
