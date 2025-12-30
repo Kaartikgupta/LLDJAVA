@@ -6,5 +6,6 @@ public class Log {
         logger.log("This is an info message.", LogLevel.INFO);
         logger.log("This is a debug message.", LogLevel.DEBUG);
         logger.log("This is an error message.", LogLevel.ERROR);
+
     }
 }
