@@ -1,16 +1,14 @@
 package main.java.com.lld.rule_engine;
 
-public class AirfareRule {
-    public boolean validateExpense(Expense expense) {
-        if (expense.getExpenseType() != ExpenseType.AIRFARE) {
-            return false;
-        }
-        // Airfare specific validation logic
-        if (expense.getAmount() <= 0) {
-            return false;
-        }
-        // Additional rules can be added here
+import java.util.Optional;
 
-        return false;
+public class AirfareRule implements ExpenseRule{
+    @Override
+    public Optional<Violation> evaluate(Expense expense) {
+        if (expense.getExpenseType() == ExpenseType.AIRFARE) {
+            return Optional.of((new Violation("AirfareNotAllowed", "Invalid expense type for AirfareRule")));
+        }
+
+        return Optional.empty();
     }
 }
