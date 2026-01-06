@@ -1,40 +1,40 @@
 package main.java.com.lld.rule_engine;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RuleEngine {
-    private final List<ExpenseRule> rules;
-    private final List<TripRule> triprule;
 
-    public RuleEngine(List<ExpenseRule> rules, List<TripRule> triprule) {
-        this.rules = new ArrayList<>();
-        this.triprule = new ArrayList<>();
+    private final List<ExpenseRule> expenseRules;
+    private final List<TripRule> tripRules;
+
+    public RuleEngine(List<ExpenseRule> expenseRules,
+                      List<TripRule> tripRules) {
+        this.expenseRules = expenseRules;
+        this.tripRules = tripRules;
     }
 
-    public List<Violation> evaluate(Expense expenses) {
-            List<Violation> violations = new ArrayList<>();
+    public List<Violation> evaluate(List<Expense> expenses) {
+        List<Violation> violations = new ArrayList<>();
 
-            for (Expense expense : expenses) {
-                for (ExpenseRule rule : expenseRules) {
-                    rule.evaluate(expense).ifPresent(violations::add);
-                }
+        // Expense-level rules
+        for (Expense expense : expenses) {
+            for (ExpenseRule rule : expenseRules) {
+                rule.evaluate(expense).ifPresent(violations::add);
             }
+        }
 
-            Map<String, List<Expense>> expensesByTrip =
-                    expenses.stream()
-                            .collect(Collectors.groupingBy(Expense::getTripId));
+        // Trip-level rules
+//        Map<String, List<Expense>> expensesByTrip =
+//                expenses.stream()
+//                        .collect(Collectors.groupingBy(Expense::getTripId));
+//
+//        for (List<Expense> tripExpenses : expensesByTrip.values()) {
+//            for (TripRule rule : tripRules) {
+//                violations.addAll(rule.evaluate(tripExpenses));
+//            }
+//        }
 
-            for (List<Expense> tripExpenses : expensesByTrip.values()) {
-                for (TripRule rule : tripRules) {
-                    violations.addAll(rule.validate(tripExpenses));
-                }
-            }
-
-            return violations;
-
+        return violations;
     }
-
 }
