@@ -3,7 +3,7 @@ package main.java.com.lld.design_patterns.repository_pattern.app;
 import main.java.com.lld.design_patterns.repository_pattern.repository.UserRepository;
 import main.java.com.lld.design_patterns.repository_pattern.repository.impl.InMemoryDb;
 import main.java.com.lld.design_patterns.repository_pattern.service.UserService;
-
+//It hides how and where data is stored and gives the application a clean way to access it
 public class UserApp {
     public static void main(String[] args) {
         System.out.println("User Application Started");
